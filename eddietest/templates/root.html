@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Welcome to the first day of the rest of your life.
+<br /> <br />
+If it is your first time vising, please enter your name below to get a personal task management page.
+<br /><br />
+<form method='post'> {% csrf_token %}
+	Name:<input type='text' name='name' size='10'>
+</form>
+<br /> <br /> <br />
+{% endblock %}

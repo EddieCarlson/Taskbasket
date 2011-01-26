@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block inhead %}
+{%endblock%}
+
+{% block content %}
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    //call plugin
+    $("div[name=radiobox]").buttonsetv();
+    $("#checkbox").buttonsetv();
+	$("#search-date-from").datepicker({
+		minDate: 0,
+		onSelect: function(dateText, inst) { 
+			$("#input-from").val(dateText);
+		}
+	});
+	$("input[name=Caption:]").change(function(){$("div[name=taskname]").removeClass("ui-state-error").addClass("ui-state-highlight")});
+	$("div[name=Due]").addClass("ui-state-highlight ui-corner-all");
+    $("input[name=Caption:]").focus();
+	$("select[name=oldkind]").change(function(){$("input[name=newkind]").val($("select[name=oldkind]").val())});
+
+});
+</script>
+
+<style type="text/css">
+	div.myunfilled{
+		border:1px solid #FAFF3D;
+	}
+	div.myfilled{
+        border:1px solid #CCFFEA;
+	}
+	p{
+		text-align:center;
+		margin:0px;
+		padding:0px;
+	}
+	.mytopmargin{
+		margin-top:20px;
+	}
+	.lightblue{
+		padding:0px;
+		margin:0px;
+		background-color:E9F7FC;
+	}
+	.nopad{
+		padding:0px;
+	}
+	.marginright{
+		margin-left:0px;
+	}
+	.invis{
+		margin:0px;
+		padding:0px;
+	}
+	body{
+		background-color:#FFFFFF;
+	}
+</style>
+
+<form method="post"> {% csrf_token %}
+
+<br />
+<div class="container">
+<div class="span-14 prepend-5 padding:5px; last">
+	<fieldset>
+	<legend>Add a New Task</legend>
+	
+		<div class="span-12 prepend-1 last ui-state-error ui-corners-all" name="taskname" id="taskname" style="padding:10px; margin-bottom:20px;">
+				<p>Name: &nbsp;&nbsp; <input type="text" name="Caption:" size="40"/></p>
+		</div>
+		
+		<!--<div class="span-13 prepend-1" style="padding:10px;">&nbsp;-->	
+		<div class="span-3 ui-state-highlight ui-corners-all" style="padding:10px;">
+				<p><b>Priority</b></p> 
+				<div name="radiobox" class="" style=" margin-left:5px; margin-top:5px; margin-bottom:5px;">
+      				<input type="radio" id="radio1" name="priority" value=1 /><label for="radio1">High</label>
+      				<input type="radio" id="radio2" name="priority" value=2 CHECKED/><label for="radio2">Normal</label>
+      				<input type="radio" id="radio3" name="priority" value=3 /><label for="radio3">Low</label>
+				</div>
+		</div>
+		<div class="span-5 prepend-5 clearfix" style="padding:10px;">
+			Image
+		</div>
+		<div class="span-3 prepend-1 last ui-state-error ui-corners-all" style="margin-left:10px; padding:10px;">
+				<p>Kind</p>
+				<select name="oldkind" id="kinds">
+					<option value=0>Select Kind</option>
+					<optgroup label="default kinds">
+					{% for k in defaultKinds %}
+						<option value={{k.name}}>{{k.name}}</option>
+					{% endfor %}
+					</optgroup>
+					{% if tempKinds %}
+						<optgroup label="your kinds">
+					{% endif %}
+					{% for k in tempKinds %}
+						<option value={{k}}>{{k}}</option>
+					{% endfor %}
+				</select>
+				
+				<br />
+				<p>--OR--</p>
+				<input type="text" id="newkind" name="newkind" size=10 />
+		</div>
+		<br /><br />
+	
+		<div name="Due" class="span-12 prepend-1 last" style="height:200px; padding:15px; margin-top:20px; margin-bottom:20px;">
+				<div class="span-2 prepend-0" style="" name="radiobox">
+                    <br/>
+					<input type="radio" id="radio4" name="radio2" value="1" CHECKED/><label for="radio4">Today</label>
+                    <input type="radio" id="radio5" name="radio2" value="2" /><label for="radio5">Tomorrow</label>
+                    <input type="radio" id="radio6" name="radio2" value="3"/><label for="radio6">This Week</label>
+					<br/><br/>
+					<input type="radio" id="radio8" name="radio2" value="5"/><label for="radio8">Long Term Goal</label>
+				</div>
+				<div class="span-5 prepend-2" style="" name="calender">	
+					<div id="search-date" class="search">
+						<div id="search-date-from" class="datepicker" style="font-size:.75em; padding:0px; margin-bottom:15px; margin-right:0px;">
+		   					<span class="search-header"><div class="input-label"> </div><input class="date" style="display:none" id="input-from" type="text" name="from" autocomplete="off" maxlength="10"/></span>
+								
+		<!-- -->		</div>
+					</div>
+				</div>
+				<div class="span-1 prepend-0 last" style="margin-left:8px; margin-top:10px;" name="radidfobox">
+					<br/><br/><br/>
+					<select name="time">
+						<option value="">End of Day</option>
+						{% for i in times %}
+                			<option value={{i}}>{{i}}</option>
+            			{% endfor %}
+					</select>
+				</div>
+		</div>
+	
+		<br /><br />
+	
+		<div class="span-12 prepend-1 last ui-state-highlight" style="padding:10px;">
+			<p>	Notes:&nbsp;&nbsp; <input type="text" name="notes" size=40 /></p>
+			</div>
+		</div>
+		<br /><br />
+		<div class="span-8 prepend-3 last" style="margin-top:20px">
+			<div class="span-4">
+				<input type='submit' />
+    		</div>
+			<div class="span-3">
+				<a href = '/user/{{userID}}/'>See all Tasks</a>
+		</div>
+	</fieldset>
+</div>
+</div>
+
+{% endblock %}
+
+<!--
+			        {% for i in monthlist %}
+    	            	<option value={{i}}>{{i}}</option>
+        	    	{% endfor %}
+      				</select><br/>
+			        Day:<select name='day'>
+	    	        {% for i in days %}
+               			<option value={{i}}>{{i}}</option>
+            		{% endfor %}
+        			</select><br/>
+        			Time:<select name='time'>
+            		{% for i in times %}
+            		    <option value={{i}}>{{i}}</option>
+           			{% endfor %}
+-->

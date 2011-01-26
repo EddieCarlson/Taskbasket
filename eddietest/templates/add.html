@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block inhead %}
+{%endblock%}
+
+{% block content %}
+Add a New Task<br /><br />	
+
+<form method='post'> {% csrf_token %} 
+
+	
+	<input type='radio' name='priority' value=1><FONT size='2'>High</FONT> &nbsp;&nbsp;\<br />  
+	<input type='radio' name='priority' value=2 CHECKED><FONT size='2'>Normal</FONT> } 
+	Priority
+	&nbsp;&nbsp;&nbsp;
+	Task Name:
+    <input type='text' name='Caption:' size='20' />
+	<br />
+	<input type='radio' name='priority' value=3><FONT size='2'>Low</FONT> &nbsp;&nbsp;&nbsp;/<br /><br />
+	Kind:
+	<select name='oldkind'>
+		<option value=0>New Kind</option>
+		{% for k in defaultKinds %}
+			<option value={{k.pk}}>{{k.name}}</option>
+		{% endfor %}
+	</select>
+	or
+	<input type='text' name='New kind:' size='6'/>
+	<br /><br />
+        Due:
+		Today?
+		<input type='checkbox' name='today' value=1 CHECKED />
+		&nbsp;&nbsp;
+		or by:
+        Month:<select name='month'>
+            {% for i in monthlist %}
+                <option value={{i}}>{{i}}</option>
+            {% endfor %}
+        </select>
+        &nbsp;Day:<select name='day'> 
+            {% for i in days %}
+                <option value={{i}}>{{i}}</option>
+            {% endfor %}
+        </select>
+        &nbsp;Time:<select name='time'>
+            {% for i in times %}
+                <option value={{i}}>{{i}}</option>
+            {% endfor %}
+        </select> 
+		<br /> <br />
+		Additional notes:<input type='text' name='notes' size='15' />
+        {% if error %}
+            <br />
+            <FONT COLOR="FF0033" size='20'> {{ error }} </FONT>
+            <br />
+        {% endif %}        
+        <br /><br /> 
+	<input type='submit' />
+        <br />
+	
+	<br />
+	<a href = '/user/{{userID}}/'>See all Tasks</a>	
+
+    </form>
+{% endblock %}

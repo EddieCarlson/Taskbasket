@@ -1,0 +1,28 @@
+<html> 
+        <head>
+			{% block inhead %}
+			{%endblock%}
+                <title>
+                       {% block name %}
+			  {{ name }}
+		       {% endblock %}
+                </title>
+
+<link rel="stylesheet" href="/static/blueprintcss/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/static/blueprintcss/blueprint/print.css" type="text/css" media="print">	
+
+
+<link type="text/css" href="/static/css/custom-theme/jquery-ui-1.8.9.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="/static/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery-ui-1.8.9.custom.min.js"></script>
+<script type="text/javascript" src="/static/eddie/jquery.eddie.js"></script>
+<script type="text/javascript" src="/static/js/date.js"></script>
+        </head>
+
+        <body>
+                {% block content %}
+                hello, world
+                {% endblock %}        
+
+        </body>
+</html>

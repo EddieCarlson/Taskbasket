@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block name %}
+	Current Tasks
+{% endblock %}
+
+
+{% block content %}
+	{{user.name}}<br />
+	{% for k in defKinds %} 
+		<a href = '/user/{{user.code}}/kind={{k}}/'}>{{k}} Tasks</a>&nbsp;&nbsp;&nbsp;
+	{% endfor %} <br />
+	{% for k in tempKinds %}
+		<a href = '/user/{{user.code}}/kind={{k}}/'}>{{k}} Tasks</a>&nbsp;&nbsp;&nbsp;
+	{% endfor %} 
+	<br /><br />
+	{% now  "H:i, F jS" %} 
+	<br /><br />
+	<FONT size='4'> Current Tasks: </FONT>
+	<form method='post'> {% csrf_token %}
+        {% for task in tasks %}
+	    	<a href = '/user/{{user.code}}/task/{{ task.pk }}/'>{{ task }} </a>
+			&nbsp;| Priority: {{task.priority}} &nbsp; |
+			Due in: {{task.dateDue|timeuntil}} &nbsp; |
+	    	<input type='radio' name='which' value={{task.id}} />
+	    	(delete task)
+            <br />
+        {% endfor %}
+	<br />
+	<input type='submit' value='Update List'/>
+	</form>
+	<br />
+	<a href = '/user/{{user.code}}/'>Home</a>&nbsp;&nbsp;&nbsp;
+	<a href = '/user/{{user.code}}/add/'>Add a new Task</a>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{{userID}} <br />
+    <form method='post'> {% csrf_token %}
+        <FONT size = '15'>  {{ task.caption }}</FONT> 
+	<br /> <br />
+	Kind:<br />
+	{{ task.kind }} <br /><br />
+	Priority(0 highest): <br />
+	{{ task.priority }} <br /> <br />
+    Complete by
+    {{ task.dateDue }}
+    ({{task.dateDue|timeuntil }}
+    remaining)    
+    {% if error %}
+        <br />
+        <FONT COLOR="FF0033" size='20'> {{ error }} </FONT>
+        <br />
+    {% endif %}        
+    <br />    
+	<br />
+	<a href = '/user/{{userID}}'>See all Tasks</a>	
+
+    </form>
+	{% endblock %}
