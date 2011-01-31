@@ -30,7 +30,7 @@ class Task(models.Model):
 	#kind = models.ForeignKey(Kind)
     
     def __unicode__(self):
-	return self.caption
+		return self.caption
 
        
 class User(models.Model):

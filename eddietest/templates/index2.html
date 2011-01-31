@@ -9,46 +9,87 @@
 	
 	<script type="text/javascript">
 	$(function() {
+		var delbutton = $("#button");
+		var taskbutton = $("button[name=task]");
+		$("div[name=newtask]")
+			.button({ icons: {primary: "ui-icon-plusthick" }})
+		$("div[name=defkinds]")
+			.buttonset()
+		$("button[name=delete]")
+			.button( {icons: { primary: "ui-icon-trash" }, text:false})
+			.click(function(){
+				//alert($(this).val())
+				$("#todelete")
+					.val($(this).val())
+					$("form#post").submit();
+			});
+		
 		$( "#accordion" ).accordion({
 			collapsible:true,
-			event: "mouseover"
+			event: "click"
 		});
 	});
 	</script>
-
-
-	{{user.name}}<br />
-	{% for k in defKinds %} 
-		<a href = '/user/{{user.code}}/kind={{k}}/'}>{{k}} Tasks</a>&nbsp;&nbsp;&nbsp;
+	
+	<style type="text/css">
+		body{background-color:EDE2D9}
+		.white{background-color:white}	
+	</style>
+	</br>
+	<div class="container">
+		<div class="span-14 prepend-5">
+			<fieldset class="white ui-corner-all" style="margin-bottom:-0px;">
+			<div class="span-14 prepend-0"> 
+				<div class="span-9 prepend-0" style="overflow:hidden"> 
+					<h2 style="margin-bottom:0px;">{{user.name}} </h2> 
+				</div>
+				<div class="span-5 prepend-0 last" style="margin-top:11px;"> <h3> {% now "H:i, F jS" %} </h3> </div> </div> 
+	</br>
+				<div name="newtask" class="span-2" style="padding:0px; margin-top:0px; text-align:center;">
+					<a style="font-size:.95em;" href = '/user/{{user.code}}/add/'>task</a>	
+				</div> 
+		<br/>
+	<div class="span-14 prepend-0" name="defkinds" style="margin-top:20px; margin-bottom:5px; text-align:center">
+		<a style="font-size:.95em" href = '/user/{{user.code}}/'>All Tasks</a>
+	{% for k in defKinds %}
+			<a style="font-size:.95em;" href = '/user/{{user.code}}/kind/{{k}}/'}>{{k}} Tasks</a>
 	{% endfor %} <br />
+	</div>
+	<br/>
+	<div class="span-14 prepend-0" name="defkinds" style="margin-top:5px; margin-bottom:10px; text-align:center">
 	{% for k in tempKinds %}
-		<a href = '/user/{{user.code}}/kind={{k}}/'}>{{k}} Tasks</a>&nbsp;&nbsp;&nbsp;
+		<a style="font-size:.95em" href = '/user/{{user.code}}/kind/{{k}}/'}>{{k}} Tasks</a>
 	{% endfor %} 
-	<br /><br />
-	{% now  "H:i, F jS" %} 
-	<br /><br />
-	<FONT size='4'> Current Tasks: </FONT>
-	<form method='post'> {% csrf_token %}
+	</div>
+	<br /><br /><br/>
+	
+	<form method='post' name="post" id="post"> {% csrf_token %}
+	<input type="text" style="display:none" id="todelete" name="todelete" />
 		
-		<div>        
-		<div id="accordion">
+		<div class="span-13 ui-corners-all last" style="margin-left:25px;">
+		
+		<fieldset>
+		<legend style="font-size:1.7em">Current Tasks</legend>
 		{% for task in tasks %}
+			<div class="task span-12 last ui-corner-all" style="background-color:#D7B9A8; padding:3px; margin-bottom:15px;">
+				<div class="span-11" style="overflow:hidden"> <a style="font-size:1.4em; font-weight:bold; text-decoration:none; color:#381800" href = '/user/{{user.code}}/task/{{task.pk}}/'>{{task}}</a> (Priority: {{task.priority}}) </div><div class="span-1 prepend-0 last" style="text-align:right"> <button name="delete" value={{task.pk}} style="font-size:1.5em; width:20px; margin-top:5px; margin-right:5px; text-align:right; background-color:#D7B9A8"></button> </div><br/> 
+				<div style="span-12; font-size:1.15em; margin-top:10px;"> {{task.dateDue|timeuntil}} remaining (Due: {{task.dateDue}})</div>
+				<div class="span-12 last" style="height:20px; overflow:hidden"> Notes: {{task.elaboration}}</div>
+				</div>
+		{%endfor%}
 			
-	    	<h3><a href = '/user/{{user.code}}/task/{{ task.pk }}/'>{{ task }} - Priority: {{task.priority}}</a></h3>
-			<div>
-			<p>Due in: {{task.dateDue|timeuntil}}, at {{task.dateDue}} </p>
-			<p>{{task.elaboration}}</p>
-			<input type='radio' name='which' value={{task.id}} />
-	    	(delete task)
-            <br />
-			</div>
-        {% endfor %}
-		</div>	
+		</fieldset>
 		</div>
-	<br />
-	<input type='submit' value='Update List'/>
+		<br/>
+				
+				<div name="newtask" class="span-4" style="margin-left:180px; text-align:center;">
+					<a style="font-size:.95em;" href = '/user/{{user.code}}/add/'>Add a new task</a>	
+				</div> 
 	</form>
-	<br />
-	<a href = '/user/{{user.code}}/'>Home</a>&nbsp;&nbsp;&nbsp;
-	<a href = '/user/{{user.code}}/add/'>Add a new Task</a>
+
+	<img src="/static/eddie/wickerbasket4.jpg" style="margin-left:115px;"/>
+	</fieldset>
+
+</div>
+</div>
 {% endblock %}

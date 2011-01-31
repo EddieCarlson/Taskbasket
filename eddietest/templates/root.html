@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Welcome to the first day of the rest of your life.
-<br /> <br />
-If it is your first time vising, please enter your name below to get a personal task management page.
+<style type="text/css">
+body{background-color:EDE2D9}
+.white{background-color:white}
+</style>
+
+
+<br/>
+<div class="container">
+<div class="span-14 prepend-5">
+<div class="span-14 last padding-bottom:0; margin-bottom:0;" style="text-align:center">
+<fieldset class="white ui-corner-all">
+<FONT style="font-size:3em;"> Welcome to Taskbasket </FONT><br/>
+<FONT style="font-style:italic; font-size:1.1em"> "You've got tasks, weave got baskets" </FONT>
+<br/><br/><br/>
+<h3> Place your name in the basket to get started </h3>
+
+
 <br /><br />
 <form method='post'> {% csrf_token %}
-	Name:<input type='text' name='name' size='10'>
+	<input type='text' name='name' class="ui-corner-all" style="width:150px; margin-left:-110px;" maxlength="30" CHECKED/>
 </form>
-<br /> <br /> <br />
+<img src="/static/eddie/wickerbasketsmallarrow.jpg"/>
+<br/><br/>
+
+</fieldset>
+</div></div></div>
+<br/>
+</fieldset>
 {% endblock %}

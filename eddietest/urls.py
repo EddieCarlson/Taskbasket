@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 	(r'^user/(.{10})/$', 'eddietest.messages.views.index'),
     (r'^user/(.{10})/add/$', 'eddietest.messages.views.add'),   
     (r'^user/(.{10})/task/(\d+)/$', 'eddietest.messages.views.task'), 
-    (r'^user/(.{10})/kind=(.+)/$', 'eddietest.messages.views.dispTasks', { 'dispAll' : False }),
+    (r'^user/(.{10})/kind/(.+)/$', 'eddietest.messages.views.dispTasks', { 'dispAll' : False }),
 	(r'^sneaky/set_defaults/$', 'eddietest.messages.views.defaults'),
 	# Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
